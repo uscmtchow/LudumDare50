@@ -4,11 +4,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#ifndef LUDUMDARE50_CHARACTER_H
-#define LUDUMDARE50_CHARACTER_H
+#ifndef CHARACTER_H
+#define CHARACTER_H
 #include <string>
-
-#endif //LUDUMDARE50_CHARACTER_H
 
 class Character {
 public:
@@ -44,7 +42,7 @@ private:
     /* Percentage resistances corresponding to the variable title - for ex. fireResistance is a percentage resistance
         against fire attacks */
     int fireResistance, waterResistance, electricResistance, windResistance;
-}
+};
 
 Character::Character() {
     // Set all variables to their start
@@ -62,3 +60,5 @@ Character::Character() {
 Character::~Character() {
     // No Memory Leaked
 }
+
+#endif //CHARACTER_H

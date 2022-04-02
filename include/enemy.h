@@ -4,39 +4,22 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#ifndef LUDUMDARE50_ENEMY_H
-#define LUDUMDARE50_ENEMY_H
+#ifndef ENEMY_H
+#define ENEMY_H
 #include "character.h"
-
-#endif //LUDUMDARE50_ENEMY_H
 
 class Enemy : public Character {
 public:
     Enemy();
     ~Enemy();
-
-private:
-    struct bossEnemy() {
-    public:
-        bossEnemy();
-        ~bossEnemy();
-    private:
-
-    }
-}
+};
 
 Enemy::Enemy() {
     // No separate variables yet;
 }
 
-~Enemy::~Enemy() {
+Enemy::~Enemy() {
     // Nothing to destroy yet;
 }
 
-Enemy::bossEnemy::bossEnemy() {
-    // Will eventually right multipliers to the character variables
-}
-
-Enemy::bossEnemy::~bossEnemy() {
-    // Nothing to destroy yet;
-}
+#endif //ENEMY_H
