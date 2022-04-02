@@ -21,7 +21,7 @@ endif()
 # Our Project
 
 include_directories(include)
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp include/sprite.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 
