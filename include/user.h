@@ -4,11 +4,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#ifndef LUDUMDARE50_USER_H
-#define LUDUMDARE50_USER_H
+#ifndef USER_H
+#define USER_H
 #include "character.h"
-
-#endif //LUDUMDARE50_USER_H
 
 class User : public Character {
 public:
@@ -19,7 +17,7 @@ private:
     unsigned int experiencePoints; // Important for keeping track of progress towards next level
     float evasion; // The likelihood of dodging an incoming enemy attack
     float runeChance; // The percentage of dropping a rune
-}
+};
 
 User::User() {
     // Set User specific variables to their base stats
@@ -33,3 +31,6 @@ User::User() {
 User::~User() {
     // Nothing to deallocate yet;
 }
+
+
+#endif //USER_H
