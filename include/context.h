@@ -6,19 +6,50 @@
 
 #ifndef CONTEXT_H
 #define CONTEXT_H
-#include "raylib.h"
+#include "raylib/raylib.h"
+
+class Context;
+
+struct Colors_ {
+	Color Background = Color{30, 30, 30, 255};
+};
+
+struct Mouse_ {
+	friend class Context;
+
+public:
+	int X() { return x; }
+	int Y() { return y; }
+	bool IsDown() { return down; }
+	bool HasClicked() { return clicked; }
+
+private:
+	int x = -2147483648;
+	int y = -2147483648;
+	bool down = false;
+	bool clicked = false;
+};
+
+struct Screen_ {
+	friend class Context;
+
+public:
+	int Width() const { return width; };
+	int Height() const { return height; };
+
+private:
+	int width = 0;
+	int height = 0;
+};
 
 class Context {
 public:
 	Context();
 	~Context() = default;
-	void NewFrame();
-	int ScreenWidth() const { return screenWidth; };
-	int ScreenHeight() const { return screenHeight; };
-	//int TimeSinceGameStart();
-private:
-	int screenWidth;
-	int screenHeight;
+	void Update();
+	const Colors_ Colors;
+	Screen_ Screen;
+	Mouse_ Mouse;
 };
 
 #endif //CONTEXT_H

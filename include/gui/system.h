@@ -4,10 +4,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#include "guisystem.h"
+#ifndef GUISYSTEM_H
+#define GUISYSTEM_H
+#include "component.h"
+#include "button.h"
+#include "horizontalpanel.h"
+#include "label.h"
+#include "verticalpanel.h"
 
-void Component::DrawComponent(Context& ctx, int x, int y) {
-	this->x = x;
-	this->y = y;
-	this->Draw(ctx);
-}
+#endif //GUISYSTEM_H

@@ -5,13 +5,29 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 #include "context.h"
+#include "cmath"
 
 Context::Context() {
-	screenWidth = 1280;
-	screenHeight = 720;
+	Screen.width = 1280;
+	Screen.height = 720;
 }
 
-void Context::NewFrame() {
-	this->screenWidth = GetScreenWidth();
-	this->screenHeight = GetScreenHeight();
+void Context::Update() {
+	// Screen
+	Screen.width = GetScreenWidth();
+	Screen.height = GetScreenHeight();
+
+	// Mouse
+	auto mousePos = GetMousePosition();
+	int prevMouseX = Mouse.x;
+	int prevMouseY = Mouse.y;
+	Mouse.x = (int)mousePos.x;
+	Mouse.y = (int)mousePos.y;
+	bool prevMouseDown = Mouse.down;
+	Mouse.down = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+	if (prevMouseDown && !Mouse.down && (abs(Mouse.x - prevMouseX) + abs(Mouse.y - prevMouseY)) <= 4) {
+		Mouse.clicked = true;
+	} else {
+		Mouse.clicked = false;
+	}
 }

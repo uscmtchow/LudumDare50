@@ -4,23 +4,22 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#include "guisystem.h"
+#include "gui/label.h"
 
-Label::Label(Context& ctx, std::string text, float widthScale, float heightScale) {
+Label::Label(Context& ctx, std::string text, const Component::Options& options) {
 	this->text = text;
-	this->widthScale = widthScale;
-	this->heightScale = heightScale;
+	this->options = options;
 	this->textLengthAt10 = (float)MeasureText(text.c_str(), 10);
 }
 
 Label::~Label() {}
 
 int Label::Height(Context& ctx) {
-	return (int)((float)parent->Height(ctx) * heightScale);
+	return (int)((float)parent->Height(ctx) * options.HeightScale);
 }
 
 int Label::Width(Context& ctx) {
-	return (int)((float)parent->Width(ctx) * widthScale);
+	return (int)((float)parent->Width(ctx) * options.WidthScale);
 }
 
 void Label::Draw(Context& ctx) {
@@ -30,9 +29,14 @@ void Label::Draw(Context& ctx) {
 		fontLength = Width(ctx);
 		fontSize = (int)(((float)fontLength / textLengthAt10) * 10.0f);
 	}
-	DrawText(text.c_str(),
+	auto color = options.DefaultColor;
+	if (options.HoverColor.a > 0 && IsMouseOver(ctx)) {
+		color = options.HoverColor;
+	}
+	DrawText(
+		text.c_str(),
 		X() + (Width(ctx) / 2) - (fontLength / 2),
 		Y() + (Height(ctx) / 2) - (fontSize / 2),
 		fontSize,
-		Color{70, 70, 70, 255});
+		color);
 }

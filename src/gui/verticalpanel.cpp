@@ -4,11 +4,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#include "guisystem.h"
+#include "gui/verticalpanel.h"
 
-VerticalPanel::VerticalPanel(Context& ctx, float widthScale, float heightScale) {
-	this->widthScale = widthScale;
-	this->heightScale = heightScale;
+VerticalPanel::VerticalPanel(Context& ctx, const Component::Options& options) {
+	this->options = options;
 	this->children = new std::vector<Component*>();
 }
 
@@ -21,20 +20,33 @@ VerticalPanel::~VerticalPanel() {
 
 int VerticalPanel::Height(Context& ctx) {
 	if (parent == nullptr) {
-		return ctx.ScreenHeight();
+		return ctx.Screen.Height();
 	}
-	return (int)((float)parent->Height(ctx) * heightScale);
+	return (int)((float)parent->Height(ctx) * options.HeightScale);
 }
 
 int VerticalPanel::Width(Context& ctx) {
 	if (parent == nullptr) {
-		return ctx.ScreenWidth();
+		return ctx.Screen.Width();
 	}
-	return (int)((float)parent->Width(ctx) * widthScale);
+	return (int)((float)parent->Width(ctx) * options.WidthScale);
+}
+
+void VerticalPanel::Update(Context& ctx) {
+	Component::Update(ctx);
+	for (auto& component: *children) {
+		component->Update(ctx);
+	}
 }
 
 void VerticalPanel::Draw(Context& ctx) {
 	int height = Height(ctx);
+	if (options.HoverColor.a > 0 && IsMouseOver(ctx)) {
+		DrawRectangle(X(), Y(), Width(ctx), height, options.HoverColor);
+	} else if (options.DefaultColor.a > 0) {
+		DrawRectangle(X(), Y(), Width(ctx), height, options.DefaultColor);
+	}
+
 	int halfWidth = Width(ctx) / 2;
 	int totalChildHeight = 0;
 	for (auto& child : *children) {
@@ -49,7 +61,11 @@ void VerticalPanel::Draw(Context& ctx) {
 	}
 }
 
-void VerticalPanel::AddChild(Context& ctx, Component* child) {
+void VerticalPanel::AddChild(Component* child) {
 	child->parent = this;
 	children->push_back(child);
+}
+
+void VerticalPanel::operator+=(Component* component) {
+	AddChild(component);
 }
