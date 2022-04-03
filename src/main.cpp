@@ -4,90 +4,41 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#include "raylib.h"
+#include "guisystem.h"
 
 int main(void) {
-	int windowWidth = 1280;
-	int windowHeight = 720;
+	Context ctx = Context();
 	const Color background = Color{30, 30, 30, 255};
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(windowWidth, windowHeight, "The Fastest RPG");
+	InitWindow(ctx.ScreenWidth(), ctx.ScreenHeight(), "The Fastest RPG");
 	SetTargetFPS(60);
 
 	int menu = 0;
 
+	auto mainMenu = VerticalPanel(ctx, 1, 1);
+	auto titlePanel = new VerticalPanel(ctx, 1, 0.4);
+	auto buttonPanel = new VerticalPanel(ctx, 1, 0.6);
+	mainMenu.AddChild(ctx, titlePanel);
+	mainMenu.AddChild(ctx, buttonPanel);
+
+	titlePanel->AddChild(ctx, new Label(ctx, "The Fastest RPG", .7, .5));
+	auto playButton = new Button(ctx, 0.4, 0.15, new Label(ctx, "PLAY", 0.7, 0.7));
+	buttonPanel->AddChild(ctx, playButton);
+	auto leaderboardsButton = new Button(ctx, 0.4, 0.15, new Label(ctx, "LEADERBOARDS", 0.7, 0.7));
+	buttonPanel->AddChild(ctx, leaderboardsButton);
+	auto playerButton = new Button(ctx, 0.4, 0.15, new Label(ctx, "PLAYER", 0.7, 0.7));
+	buttonPanel->AddChild(ctx, playerButton);
+	auto volPlaceholderButton = new Button(ctx, 0.4, 0.15, new Label(ctx, "VOL PLACEHOLDER", 0.7, 0.7));
+	buttonPanel->AddChild(ctx, volPlaceholderButton);
+
 	while (!WindowShouldClose()) {
-		windowWidth = GetScreenWidth();
-		windowHeight = GetScreenHeight();
+		ctx.NewFrame();
 		BeginDrawing();
 		ClearBackground(background);
 
 		if (menu == 0) {
-			int titleSpace = windowHeight / 3;
-			int titleFontSize = (int)(windowHeight * 0.15);
-			if ((windowWidth * 0.08) < titleFontSize) {
-				titleFontSize = (int)(windowWidth * 0.08);
-			}
-			int titleWidth = MeasureText("The Fastest RPG", titleFontSize);
-			DrawText("The Fastest RPG", (windowWidth / 2) - (titleWidth / 2), (titleSpace / 2) - (titleFontSize / 2), titleFontSize, RAYWHITE);
-
-			int buttonSpaceDivisions = (windowHeight - titleSpace) / 4;
-			int buttonWidth = (int)(windowWidth * 0.4);
-			int buttonHeight = (int)(buttonSpaceDivisions * 0.6);
-			int buttonFontSize = (int)(buttonHeight * 0.7);
-			if ((buttonWidth * 0.08) < buttonFontSize) {
-				buttonFontSize = (int)(buttonWidth * 0.08);
-			}
-			Rectangle playButton = {
-				.x =  (float)((windowWidth / 2) - (buttonWidth / 2)),
-				.y =  (float)(titleSpace + ((buttonSpaceDivisions / 2) - (buttonHeight / 2))),
-				.width =  (float)buttonWidth,
-				.height =  (float)buttonHeight
-			};
-			Rectangle leaderboardButton = {
-					.x =  playButton.x,
-					.y =  playButton.y + buttonSpaceDivisions,
-					.width =  playButton.width,
-					.height =  playButton.height
-			};
-			Rectangle playerButton = {
-					.x =  playButton.x,
-					.y =  playButton.y + (2 * buttonSpaceDivisions),
-					.width =  playButton.width,
-					.height =  playButton.height
-			};
-			Rectangle volumeSlider = {
-					.x =  playButton.x,
-					.y =  playButton.y + (3 * buttonSpaceDivisions),
-					.width =  playButton.width,
-					.height =  playButton.height
-			};
-
-			DrawRectangleRec(playButton, GRAY);
-			DrawText("PLAY",
-				playButton.x + (playButton.width / 2) - (MeasureText("PLAY", buttonFontSize) / 2),
-				playButton.y + (playButton.height / 2) - (buttonFontSize / 2),
-				buttonFontSize,
-				Color{70, 70, 70, 255});
-			DrawRectangleRec(leaderboardButton, GRAY);
-			DrawText("LEADERBOARDS",
-					 leaderboardButton.x + (leaderboardButton.width / 2) - (MeasureText("LEADERBOARDS", buttonFontSize) / 2),
-					 leaderboardButton.y + (leaderboardButton.height / 2) - (buttonFontSize / 2),
-					 buttonFontSize,
-					 Color{70, 70, 70, 255});
-			DrawRectangleRec(playerButton, GRAY);
-			DrawText("PLAYER",
-					 playerButton.x + (playerButton.width / 2) - (MeasureText("PLAYER", buttonFontSize) / 2),
-					 playerButton.y + (playerButton.height / 2) - (buttonFontSize / 2),
-					 buttonFontSize,
-					 Color{70, 70, 70, 255});
-			DrawRectangleRec(volumeSlider, GRAY);
-			DrawText("VOL PLACEHOLDER",
-					 volumeSlider.x + (volumeSlider.width / 2) - (MeasureText("VOL PLACEHOLDER", buttonFontSize) / 2),
-					 volumeSlider.y + (volumeSlider.height / 2) - (buttonFontSize / 2),
-					 buttonFontSize,
-					 Color{70, 70, 70, 255});
+			mainMenu.DrawComponent(ctx, 0, 0);
 		} else if (menu == 1) {
 
 		}

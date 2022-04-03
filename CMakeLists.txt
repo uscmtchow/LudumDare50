@@ -20,8 +20,12 @@ endif()
 
 # Our Project
 
-include_directories(include)
-add_executable(${PROJECT_NAME} src/main.cpp include/sprite.h)
+include_directories(include src)
+file(GLOB all_SRCS
+    "${PROJECT_SOURCE_DIR}/src/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/*.c"
+    )
+add_executable(${PROJECT_NAME} ${all_SRCS})
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

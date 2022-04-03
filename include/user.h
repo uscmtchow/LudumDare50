@@ -32,5 +32,4 @@ User::~User() {
     // Nothing to deallocate yet;
 }
 
-
 #endif //USER_H
