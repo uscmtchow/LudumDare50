@@ -10,17 +10,18 @@
 #include "raylib.h"
 #include <string>
 
-enum name {
-    spearGoblin = 1,
-    bearBaby = 2,
-    golem = 3
+enum SpriteName {
+	None = 0,
+    SpearGoblin = 1,
+    BearBaby = 2,
+    Golem = 3
 };
 
 class Sprite {
 public:
     Sprite();
 
-    enum name name;
+	SpriteName name;
     Color color;
 
     int posX, posY;
@@ -29,16 +30,16 @@ private:
 };
 
 Sprite::Sprite() {
-    name = "";
+	name = None;
     color = WHITE;
     posX = 0;
     posY = 0;
 }
 
 // Create sprite given a name type and the color for tinting
-Sprite& initializeSprite(enum name spriteName, Color spriteColor);
+Sprite& initializeSprite(SpriteName spriteName, Color spriteColor);
 
 // Prints the sprite onto a given location
 void printSprite(Sprite sprite);
 
-#endif //LUDUMDARE50_SPRITE_H
+#endif //SPRITE_H

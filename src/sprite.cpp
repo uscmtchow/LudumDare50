@@ -7,19 +7,19 @@
 #include "sprite.h"
 #include "raylib.h"
 
-Sprite& intializeSprite(enum name spriteName, Color spriteColor) {
+Sprite& intializeSprite(SpriteName spriteName, Color spriteColor) {
     switch(spriteName) {
-        case spearGoblin:
+		case SpriteName::SpearGoblin:
             Sprite* SpearGoblin;
             SpearGoblin->name = spriteName;
             SpearGoblin->color = spriteColor;
             return *SpearGoblin;
-        case bearBaby:
+        case SpriteName::BearBaby:
             Sprite* BearBaby;
             BearBaby->name = spriteName;
             BearBaby->color = spriteColor;
             return *BearBaby;
-        case golem:
+        case SpriteName::Golem:
             Sprite* Golem;
             Golem->name = spriteName;
             Golem->color = spriteColor;
@@ -29,16 +29,16 @@ Sprite& intializeSprite(enum name spriteName, Color spriteColor) {
 
 void printSprite(Sprite sprite) {
     Image grayImage, backImage;
-    name spriteCheck = sprite.name;
+	SpriteName spriteCheck = sprite.name;
 
     switch(spriteCheck) {
-        case spearGoblin:
+        case SpriteName::SpearGoblin:
             grayImage = LoadImage("../Art/Enemies/SpearGoblin/GrayLayer.png");
             backImage = LoadImage("../Art/Enemies/SpearGoblin/ColorLayer.png");
-        case bearBaby:
+        case SpriteName::BearBaby:
             grayImage = LoadImage("../Art/Enemies/BabyBearBaby/GrayLayer.png");
             backImage = LoadImage("../Art/Enemies/BabyBearBaby/ColorLayer.png");
-        case golem:
+        case SpriteName::Golem:
             grayImage = LoadImage("../Art/Enemies/Golem/GrayLayer.png");
             backImage = LoadImage("../Art/Enemies/Golem/ColorLayer.png");
     }
@@ -59,4 +59,3 @@ void printSprite(Sprite sprite) {
     DrawTexture(grayTexture, sprite.posX, sprite.posY, sprite.color);
     DrawTexture(backTexture, sprite.posX, sprite.posY, WHITE);
 }
-
